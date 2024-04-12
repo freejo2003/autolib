@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './Signup.css';
-import EmailQRCode from './EmailQRCode';
 const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -9,6 +8,7 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     // Handle signup logic here
   };
 

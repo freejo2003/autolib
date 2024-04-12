@@ -7,56 +7,55 @@ const Book = () => {
   const [edition, setEdition] = useState('');
   const [shelfId, setShelfId] = useState('');
 
- const handleAddBook = () => {
-    // Implement logic to add the book to the database
-    // You can use APIs or Firebase Realtime Database here
-
-    // Reset input fields
-    setBookName('');
-    setAuthorName('');
-    setPublication('');
-    setEdition('');
-    setShelfId('');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle AddBook logic here
   };
 
   return (
-    <div className="library-app">
+    <form onSubmit={handleSubmit}>
+    
       <h1>Library Management System</h1>
-      <div className="input-fields">
+     <label htmlFor='Book Name'>Book Name:</label>
         <input
           type="text"
           placeholder="Book Name"
           value={bookName}
           onChange={(e) => setBookName(e.target.value)}
         />
+        <label htmlFor='Author Name'>Author Name:</label>
         <input
           type="text"
           placeholder="Author Name"
           value={authorName}
           onChange={(e) => setAuthorName(e.target.value)}
         />
+        <label htmlFor='Publication'>Publication:</label>
         <input
           type="text"
           placeholder="Publication"
           value={publication}
           onChange={(e) => setPublication(e.target.value)}
         />
+        <label htmlFor='Edition'>Edition:</label>
         <input
           type="text"
           placeholder="Edition"
           value={edition}
           onChange={(e) => setEdition(e.target.value)}
         />
+        <label htmlFor='Shelf ID'>Shelf ID:</label>
         <input
           type="text"
           placeholder="Shelf ID"
           value={shelfId}
           onChange={(e) => setShelfId(e.target.value)}
         />
+        <label htmlFor='Cover'>Cover:</label>
         <input type="file" accept="image/*" />
-      </div>
-      <button onClick={handleAddBook}>Add Book</button>
-    </div>
+      
+      <button type="Add Book">Add Book</button>
+      </form>
   );
 };
 
