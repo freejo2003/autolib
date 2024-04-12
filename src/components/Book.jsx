@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 
 const Book = () => {
   const [bookName, setBookName] = useState('');
   const [authorName, setAuthorName] = useState('');
   const [publication, setPublication] = useState('');
   const [edition, setEdition] = useState('');
+  const navigate =useNavigate();
+
   const [shelfId, setShelfId] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle AddBook logic here
+    // Handle AddBook logic herenn
+    alert("successfully added")
+    navigate("/display")
   };
 
   return (
     <form onSubmit={handleSubmit}>
     
-      <h1>Library Management System</h1>
+      <h1>SHELF 101</h1>
      <label htmlFor='Book Name'>Book Name:</label>
         <input
           type="text"
