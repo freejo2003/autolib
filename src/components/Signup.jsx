@@ -15,7 +15,7 @@ const Signup = () => {
     
     // Handle signup logic here
     alert(`registered user ${name}`);
-    navigate("/");
+    navigate("/login");
   };
 
   return (

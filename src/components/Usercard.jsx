@@ -2,14 +2,18 @@ import React from 'react';
 import './Usercard.css';
 import userData from './userbook.json'; // make sure the path to the json file is correct
 import './download.png';
+import Header from './Header';
+
 const UserCard = () => {
   const user = userData;
 
   return (
     <div className="user-card">
-      <img src={require("./download.png")} alt="Login QR" />
+         <Header />
       <h2>{user.name}</h2>
       <p>ID: {user.id}</p>
+      <div className='qr-code'><img src={require("./download.png")} alt="Login QR" /></div>
+      
       <h3>List of allotted Books:</h3>
       <table>
         <thead>

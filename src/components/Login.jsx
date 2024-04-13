@@ -11,7 +11,7 @@ const Login = () => {
     // Handle login logic here
     alert(`Welcome back user ${username}`);
 
-    navigate("/book")
+    navigate("/")
   };
 
   return (

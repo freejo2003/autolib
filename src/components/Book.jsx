@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from './Header';
 
 
 const Book = () => {
@@ -15,11 +16,12 @@ const Book = () => {
     e.preventDefault();
     // Handle AddBook logic herenn
     alert("successfully added")
-    navigate("/display")
+    navigate("/")
   };
 
   return (
     <form onSubmit={handleSubmit}>
+       <Header />
     
       <h1>SHELF 101</h1>
      <label htmlFor='Book Name'>Book Name:</label>

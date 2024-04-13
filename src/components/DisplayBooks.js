@@ -1,5 +1,6 @@
 import React from 'react';
 import data from './data.json'; // Importing data from data.json
+import Header from './Header';
 
 const DisplayBooks = () => {
   // Extracting the 'books' array from the imported JSON data
@@ -12,6 +13,7 @@ const DisplayBooks = () => {
 
   return (
     <div>
+       <Header />
       <h1>Books Available</h1>
       <ul>
         {/* Mapping through the randomBooks array and displaying each book */}
