@@ -11,21 +11,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* Add your QR code styling here */
 }
 
   
-  .user-card h2, .user-card p {
+  .user-card h2,.user-card h3, .user-card p {
     text-align: center;
   }
   
   .user-card table {
-    width: 100%;
+    width: flex;
     margin-top: 15px;
   }
   
-  .user-card th, .user-card td {
-    text-align: left;
-    padding: 5px;
+  th{
+    text-align: center;
+    padding: 7px;
+    
   }
   
+   td {
+    text-align: center;
+    padding: 7px;
+    
+  }

@@ -15,7 +15,7 @@ const UserCard = () => {
       <div className='qr-code'><img src={require("./download.png")} alt="Login QR" /></div>
       
       <h3>List of allotted Books:</h3>
-      <table>
+      <table className='user-card table'>
         <thead>
           <tr>
             <th>Name of Book</th>
