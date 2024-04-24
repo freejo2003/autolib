@@ -1,42 +1,39 @@
-import React, { useState } from 'react';
-import './Login.css';
-import { useNavigate } from 'react-router-dom';
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate =useNavigate();
+import React, { useState, useEffect } from 'react';
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
+import { auth } from '../firebaseConfig';
+import { useNavigate, useNavigation } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle login logic here
-    alert(`Welcome back user ${username}`);
+const LoginPage = () => {
+  const { setUser } = useUser();
+  const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
-    navigate("/")
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(auth, provider);
+      navigate("/");
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="username">Username:</label>
-      <input
-        type="text"
-        id="username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <label htmlFor="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="submit">Login</button>
-    
-            <p className='signup-text'>Don't have an account? 
-              <a href="/signup" className='signup-link'>Sign Up</a></p>
-    </form>
-    
+    <div className='form'>
+      <h2>Login with Google</h2>
+      <button onClick={handleGoogleSignIn}>Sign in with Google</button>
+      {errorMessage && <p>{errorMessage}</p>}
+    </div>
   );
 };
 
-export default Login;
+export default LoginPage;

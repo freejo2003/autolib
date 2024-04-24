@@ -1,5 +1,6 @@
 import React from 'react';
 import './Usercard.css';
+import 'firebase/compat/auth';
 import userData from './userbook.json'; // make sure the path to the json file is correct
 import './download.png';
 import Header from './Header';
