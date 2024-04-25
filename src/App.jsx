@@ -10,9 +10,9 @@ function App() {
       <UserProvider>
         <BrowserRouter>
           <Routes>
+          <Route path='/' element={<Display />} />
             <Route path="/login" element={<Login />} />
             <Route path="/book" element={<Book />} />
-            <Route path='/' element={<Display />} />
             <Route path='/user' element={<UserCard />} />
           </Routes>
         </BrowserRouter>

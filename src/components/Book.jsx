@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
+import { db } from "../firebaseConfig";
 
 
 const Book = () => {
@@ -9,14 +10,34 @@ const Book = () => {
   const [publication, setPublication] = useState('');
   const [edition, setEdition] = useState('');
   const navigate =useNavigate();
-
   const [shelfId, setShelfId] = useState('');
-
-  const handleSubmit = (e) => {
+  const booksRef =db.collection('books');
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle AddBook logic herenn
-    alert("successfully added")
-    navigate("/")
+    const bookData = {
+      bookName,
+      authorName,
+      publication,
+      edition,
+      shelfId,
+    };
+    const newBook= await booksRef.add(bookData);
+    try{
+      await booksRef.add(newBook);
+      const bookRef =await db.ref('books').push(bookData); // Push to 'books' collection
+      console.log("Book added with ID:", bookRef.key);
+      alert("Book successfully added!");
+      setBookName(""); // Clear form fields after successful submission
+      setAuthorName("");
+      setPublication("");
+      setEdition("");
+      setShelfId("");
+      navigate("/");
+    } 
+    catch (error) {
+      console.error("Error adding book:", error);
+      alert("An error occurred. Please try again.");
+    }
   };
 
   return (
@@ -59,9 +80,6 @@ const Book = () => {
           value={shelfId}
           onChange={(e) => setShelfId(e.target.value)}
         />
-        <label htmlFor='Cover'>Cover:</label>
-        <input type="file" accept="image/*" />
-      
       <button type="Add Book">Add Book</button>
       </form>
   );
