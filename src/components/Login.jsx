@@ -4,6 +4,7 @@ import { auth } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 import './Login.css';
+import Header from './Header';
 const LoginPage = () => {
   const { setUser } = useUser();
   const [errorMessage, setErrorMessage] = useState('');
@@ -29,6 +30,7 @@ const LoginPage = () => {
 
   return (
     <div>
+      <Header />
       <h1>GOOGLE SIGNIN</h1>
       <button onClick={handleGoogleSignIn}>Sign in with Google</button>
       {errorMessage && <p>{errorMessage}</p>}
