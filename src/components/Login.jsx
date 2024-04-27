@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebase/auth";
 import { auth } from '../firebaseConfig';
-import { useNavigate, useNavigation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
 
 const LoginPage = () => {
@@ -21,7 +21,7 @@ const LoginPage = () => {
     try {
       const provider = new GoogleAuthProvider();
       await signInWithPopup(auth, provider);
-      navigate("/");
+      navigate("/display"); // Navigate to /display after successful login
     } catch (error) {
       setErrorMessage(error.message);
     }

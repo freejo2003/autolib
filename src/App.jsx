@@ -4,16 +4,21 @@ import Book from "./components/Book";
 import Display from './components/DisplayBooks';
 import UserCard from "./components/Usercard";
 import { UserProvider } from "./context/UserContext";
+import Home from "./components/Home";
+
+
 function App() {
   return (
     <div>
       <UserProvider>
         <BrowserRouter>
           <Routes>
-          <Route path='/' element={<Display />} />
+            <Route path="/" element={<Home />} />
+          <Route path='/display' element={<Display />} />
             <Route path="/login" element={<Login />} />
             <Route path="/book" element={<Book />} />
             <Route path='/user' element={<UserCard />} />
+            
           </Routes>
         </BrowserRouter>
       </UserProvider>

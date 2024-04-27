@@ -1,0 +1,21 @@
+/* DisplayBooks.css */
+
+h1 {
+    text-align: center;
+  }
+  
+  table {
+    border: 1px solid black;
+    width: 100%;
+  }
+  
+  table th, table td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  table th {
+    background-color: #f2f2f2;
+  }
+  

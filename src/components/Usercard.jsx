@@ -2,15 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './Usercard.css';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import userData from './userbook.json'; // Import the JSON file
-
 import Header from './Header';
 import QRCode from 'qrcode.react';
-
-
 const UserCard = () => {
   const [user, setUser] = useState(userData); // Use the imported data as initial state
   const auth = getAuth();
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
       if (currentUser) {
@@ -21,24 +17,20 @@ const UserCard = () => {
         setUser(null);
       }
     });
-
     // Cleanup subscription on unmount
     return () => unsubscribe();
   }, [auth]);
-
   if (!user) {
     return <div>Loading...</div>;
   }
-
   return (
     <div className="user-card">
       <Header />
       <h2>{user.displayName}</h2>
       <p>ID: {user.email}</p>
       <div className='qr-code'>
-        <QRCode value={user.email} /> {/* Generate QR code */}
+        <QRCode value={user.email} /> 
       </div>
-      
       <h3>List of allotted Books:</h3>
       {user.books ? (
         <table className='user-card table'>
@@ -65,5 +57,4 @@ const UserCard = () => {
     </div>
   );
 };
-
 export default UserCard;
