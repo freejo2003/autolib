@@ -3,7 +3,7 @@ import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "firebas
 import { auth } from '../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
-
+import './Login.css';
 const LoginPage = () => {
   const { setUser } = useUser();
   const [errorMessage, setErrorMessage] = useState('');
@@ -28,8 +28,8 @@ const LoginPage = () => {
   };
 
   return (
-    <div className='form'>
-      <h2>Login with Google</h2>
+    <div>
+      <h1>GOOGLE SIGNIN</h1>
       <button onClick={handleGoogleSignIn}>Sign in with Google</button>
       {errorMessage && <p>{errorMessage}</p>}
     </div>

@@ -18,7 +18,7 @@ const Header = () => {
             <li><Link to="/login" onClick={() => setIsOpen(false)}>Login</Link></li>
             <li><Link to="/book" onClick={() => setIsOpen(false)}>Add Book</Link></li>
             <li><Link to="/user" onClick={() => setIsOpen(false)}>User Card</Link></li>
-            <li><Link to="/Scan" onClick={() => setIsOpen(false)}>Scan</Link></li>
+            <li><Link to="/qrread" onClick={() => setIsOpen(false)}>Scan</Link></li>
           </ul>
         </nav>
       </header>

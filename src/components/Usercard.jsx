@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import './Usercard.css';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import userData from './userbook.json'; // Import the JSON file
 import Header from './Header';
 import QRCode from 'qrcode.react';
 const UserCard = () => {
-  const [user, setUser] = useState(userData); // Use the imported data as initial state
+  const [user, setUser] = useState(null); // Use the imported data as initial state
   const auth = getAuth();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, currentUser => {
@@ -41,15 +40,6 @@ const UserCard = () => {
               <th>Date of Return</th>
             </tr>
           </thead>
-          <tbody>
-            {user.books.map((book, index) => (
-              <tr key={index}>
-                <td>{book.name}</td>
-                <td>{book.allotDate}</td>
-                <td>{book.returnDate}</td>
-              </tr>
-            ))}
-          </tbody>
         </table>
       ) : (
         <p>No books found.</p>
