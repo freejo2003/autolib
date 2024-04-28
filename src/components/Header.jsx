@@ -56,7 +56,7 @@ const Header = () => {
                     )}
                     <li><Link to="/user" onClick={() => setIsOpen(false)}>User Card</Link></li>
                     {isAdmin && (
-                        <li><Link to="/qrread" onClick={() => setIsOpen(false)}>Scan</Link></li>
+                        <li><Link to="/scanner" onClick={() => setIsOpen(false)}>Scan</Link></li>
                     )}
                 </ul>
             </nav>

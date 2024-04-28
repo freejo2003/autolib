@@ -6,6 +6,7 @@ import UserCard from "./components/Usercard";
 import { UserProvider } from "./context/UserContext";
 import Home from "./components/Home";
 import QrReader from "./components/QrReader";
+import Scanner from "./components/Scanner";
 
 function App() {
   return (
@@ -14,11 +15,11 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Home />} />
-          <Route path='/display' element={<Display />} />
+            <Route path='/display' element={<Display />} />
             <Route path="/login" element={<Login />} />
             <Route path="/book" element={<Book />} />
             <Route path='/user' element={<UserCard />} />
-            <Route path="/qrread" element= {<QrReader />} />
+            <Route path="/scanner" element= {<Scanner />} />
           </Routes>
         </BrowserRouter>
       </UserProvider>

@@ -1,21 +1,26 @@
 /* DisplayBooks.css */
 
 h1 {
-    text-align: center;
-  }
-  
-  table {
-    border: 1px solid black;
-    width: 100%;
-  }
-  
-  table th, table td {
-    border: 1px solid black;
-    padding: 10px;
-    text-align: left;
-  }
-  
-  table th {
-    background-color: #f2f2f2;
-  }
-  
+  text-align: center;
+}
+
+table {
+  border-collapse: collapse; /* Merge cell borders */
+  width: 100%;
+}
+
+table th, table td {
+  border: 1px solid black;
+  padding: 10px;
+  text-align: left; /* Align text to the left */
+}
+
+
+table th {
+  background-color: #f2f2f2;
+}
+
+/* Add hover effect to table rows */
+table tr:hover {
+  background-color: #e6e6e6;
+}

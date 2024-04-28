@@ -1,24 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import './Usercard.css';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import Header from './Header';
-import QRCode from 'qrcode.react';
+import { useUser } from "../context/UserContext";
+import "./Usercard.css";
+import Header from "./Header";
+import QRCode from "qrcode.react";
+import { useState, useEffect } from "react";
+import { dataRef } from "../firebaseConfig";
 const UserCard = () => {
-  const [user, setUser] = useState(null); // Use the imported data as initial state
-  const auth = getAuth();
+  const { user } = useUser();
+  const [books, setBooks] = useState([]);
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
-      if (currentUser) {
-        // User is signed in.
-        setUser(currentUser);
+      if (user) {
+        const booksRef = dataRef.ref("books");
+        booksRef.orderByChild("takenBy").equalTo(user.email).on("value", (snapshot) => {
+          const booksData = snapshot.val();
+          if (booksData) {
+            const booksArray = Object.keys(booksData).map((key) => ({
+              ...booksData[key],
+              id: key,
+            }));
+            setBooks(booksArray);
       } else {
-        // No user is signed in.
-        setUser(null);
+        setBooks([]);
       }
     });
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
-  }, [auth]);
+  }
+},[user]);
   if (!user) {
     return <div>Loading...</div>;
   }
@@ -27,19 +32,30 @@ const UserCard = () => {
       <Header />
       <h2>{user.displayName}</h2>
       <p>ID: {user.email}</p>
-      <div className='qr-code'>
-        <QRCode value={user.email} /> 
+      <div className="qr-code">
+        <QRCode value={user.email} />
       </div>
       <h3>List of allotted Books:</h3>
-      {user.books ? (
-        <table className='user-card table'>
+      {books.length > 0 ? (
+        <table>
           <thead>
             <tr>
               <th>Name of Book</th>
-              <th>Date of Allot</th>
-              <th>Date of Return</th>
+              <th>Book edition</th>
+              <th>Book publication</th>
+              <th>Author name</th>
             </tr>
           </thead>
+          <tbody>
+            {books.map((book,index)=>(
+              <tr key={index}>
+                <td>{book.bookName}</td>
+                <td>{book.edition}</td>
+                <td>{book.publication}</td>
+                <td>{book.authorName}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       ) : (
         <p>No books found.</p>

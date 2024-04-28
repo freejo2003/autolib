@@ -9,6 +9,7 @@ const DisplayBooks = () => {
   const [books, setBooks] = useState([]);
   const [userEmail, setUserEmail] = useState(null);
   const auth = getAuth();
+  console.log(books);
 
   useEffect(() => {
     const getBooks = async () => {
@@ -41,9 +42,9 @@ const DisplayBooks = () => {
             <th>Publication</th>
             <th>Edition</th>
             <th>Shelf ID</th>
-            <th>Published Year</th>
-            <th>Status</th>
-            {userEmail === 'freejojaison555@gmail.com' && <th>Contact</th>}
+            <th>Availability</th>
+            <th>Taken By</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -53,10 +54,9 @@ const DisplayBooks = () => {
               <td>{book.authorName}</td>
               <td>{book.publication}</td>
               <td>{book.edition}</td>
-              <td>{book.shelfID}</td>
-              <td>{book.publishedYear}</td>
-              <td>{/* Add content for Extra Column 1 */}</td>
-              {userEmail === 'freejojaison555@gmail.com' && <td>{/* Add content for Contact column */}</td>}
+              <td>{book.shelfId}</td>
+              <td>{book.availability ? "Avilable" : "Not avilable"}</td>
+              <td>{book.takenBy}</td>
             </tr>
           ))}
         </tbody>

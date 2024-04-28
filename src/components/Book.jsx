@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/database';
-import 'firebase/compat/firestore';
+import {dataRef} from "../firebaseConfig";
 import './Book.css';
+
 const Book = () => {
+  const navigate = useNavigate();
   const [bookName, setBookName] = useState('');
   const [authorName, setAuthorName] = useState('');
   const [publication, setPublication] = useState('');
   const [edition, setEdition] = useState('');
-  const navigate = useNavigate();
+  
   const [shelfId, setShelfId] = useState('');
-  const booksRef = firebase.firestore().collection('books');
-  const booksRefRealtime = firebase.database().ref('books');
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,21 +22,16 @@ const Book = () => {
       publication,
       edition,
       shelfId,
+      availability:true,
+      takenBy:""
     };
-
+const bookId=bookName.replace(/\s/g,"_");
     try {
-      // Add to Firestore
-      const docRef = await booksRef.add(bookData);
-      console.log("Book added to Firestore with ID:", docRef.id);
-
-      // Add to Realtime Database
-      const snapshot = await booksRefRealtime.push(bookData);
-      console.log("Book added to Realtime Database with ID:", snapshot.key);
-
+      const newReminderRef = dataRef.ref("books").child(bookId);
+        await newReminderRef.set(bookData);
       alert("Book successfully added!");
-      
+      setBookName("");      
       setAuthorName("");
-      setBookName(""); // Clear form fields after successful submission
       setEdition("");
       setPublication("");
       setShelfId("");
@@ -54,13 +48,6 @@ const Book = () => {
        <Header />
     
       <h1>SHELF 101</h1>
-      <label htmlFor='Author Name'>Author Name:</label>
-        <input
-          type="text"
-          placeholder="Author Name"
-          value={authorName}
-          onChange={(e) => setAuthorName(e.target.value)}
-        />
      <label htmlFor='Book Name'>Book Name:</label>
         <input
           type="text"
@@ -68,12 +55,12 @@ const Book = () => {
           value={bookName}
           onChange={(e) => setBookName(e.target.value)}
         />
-        <label htmlFor='Edition'>Edition:</label>
+        <label htmlFor='Author Name'>Author Name:</label>
         <input
           type="text"
-          placeholder="Edition"
-          value={edition}
-          onChange={(e) => setEdition(e.target.value)}
+          placeholder="Author Name"
+          value={authorName}
+          onChange={(e) => setAuthorName(e.target.value)}
         />
         <label htmlFor='Publication'>Publication:</label>
         <input
@@ -82,6 +69,14 @@ const Book = () => {
           value={publication}
           onChange={(e) => setPublication(e.target.value)}
         />
+        <label htmlFor='Edition'>Edition:</label>
+        <input
+          type="text"
+          placeholder="Edition"
+          value={edition}
+          onChange={(e) => setEdition(e.target.value)}
+        />
+
         
         <label htmlFor='Shelf ID'>Shelf ID:</label>
         <input
@@ -94,5 +89,4 @@ const Book = () => {
       </form>
   );
 };
-
 export default Book;
