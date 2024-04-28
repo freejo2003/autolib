@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
-import { db } from "../firebaseConfig";
+import { dataRef } from "../firebaseConfig";
 
 
 const Book = () => {
+  const navigate =useNavigate();
   const [bookName, setBookName] = useState('');
   const [authorName, setAuthorName] = useState('');
   const [publication, setPublication] = useState('');
   const [edition, setEdition] = useState('');
-  const navigate =useNavigate();
   const [shelfId, setShelfId] = useState('');
-  const booksRef =db.collection('books');
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const bookData = {
@@ -20,14 +21,16 @@ const Book = () => {
       publication,
       edition,
       shelfId,
+      availability: true,
+      takenBy: ""
     };
-    const newBook= await booksRef.add(bookData);
+    const bookId = bookName.replace(/\s/g, "_");
+
     try{
-      await booksRef.add(newBook);
-      const bookRef =await db.ref('books').push(bookData); // Push to 'books' collection
-      console.log("Book added with ID:", bookRef.key);
+        const newReminderRef = dataRef.ref("books").child(bookId);
+        await newReminderRef.set(bookData);
       alert("Book successfully added!");
-      setBookName(""); // Clear form fields after successful submission
+      setBookName("");
       setAuthorName("");
       setPublication("");
       setEdition("");

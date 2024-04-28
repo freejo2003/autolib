@@ -5,6 +5,7 @@ import 'firebase/compat/database';
 
 const DisplayBooks = () => {
   const [books, setBooks] = useState([]);
+  console.log(books);
   
   useEffect(() => {
     const getBooks = async () => {
@@ -27,8 +28,9 @@ const DisplayBooks = () => {
             <p><strong>Author:</strong> {book.authorName}</p>
             <p><strong>Publication:</strong> {book.publication}</p>
             <p><strong>Edition:</strong> {book.edition}</p>
-            <p><strong>Shelf ID:</strong> {book.shelfID}</p>
-            <p><strong>Published Year:</strong> {book.publishedYear}</p>
+            <p><strong>Shelf ID:</strong> {book.shelfId}</p>
+            <p><strong>Avilable:</strong> {book.availability ? "Avilable" : "Not avilable"}</p>
+            <p><strong>Taken by:</strong> {book.takenBy}</p>
           </li>
         ))}
       </ul>
