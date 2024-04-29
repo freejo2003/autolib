@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useUser } from "../context/UserContext";
 import { Link } from 'react-router-dom';
-import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'; // Import signOut
-import './Header.css'; // make sure to create this CSS file
+import { useNavigate } from 'react-router-dom';
+import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth'; 
+import './Header.css'; 
 
 const Header = () => {
+    const navigate = useNavigate();
+    const { user } = useUser();
     const [isOpen, setIsOpen] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false); // State to track admin status
+    const [isAdmin, setIsAdmin] = useState(false); 
     const auth = getAuth();
 
     useEffect(() => {
@@ -28,7 +32,9 @@ const Header = () => {
         signOut(auth)
             .then(() => {
                 // Sign-out successful.
+                alert("Logged Out!Please Login")
                 console.log('User signed out successfully');
+                navigate("/login");
             })
             .catch((error) => {
                 // An error happened.
@@ -46,8 +52,8 @@ const Header = () => {
                 <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
                     <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
                     <li><Link to="/display" onClick={() => setIsOpen(false)}>Books</Link></li>
-                    {isAdmin ? (
-                        <li><button onClick={handleLogout}>Logout</button></li>
+                    {user ? (//change is admin to if a user exist
+                        <li><Link to="/login"onClick={handleLogout}>Logout</Link></li>
                     ) : (
                         <li><Link to="/login" onClick={() => setIsOpen(false)}>Login</Link></li>
                     )}

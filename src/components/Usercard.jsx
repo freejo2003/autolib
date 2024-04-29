@@ -2,11 +2,15 @@ import { useUser } from "../context/UserContext";
 import "./Usercard.css";
 import Header from "./Header";
 import QRCode from "qrcode.react";
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { dataRef } from "../firebaseConfig";
+import { Link } from 'react-router-dom';
+
 const UserCard = () => {
   const { user } = useUser();
   const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
       if (user) {
         const booksRef = dataRef.ref("books");
@@ -25,7 +29,15 @@ const UserCard = () => {
   }
 },[user]);
   if (!user) {
-    return <div>Loading...</div>;
+    <Link to="/login">
+        <button >Login</button>
+      </Link>
+      return (<div>
+        <h3>Please Login</h3>
+        <Link to="/login">
+      <button >Login</button>
+    </Link></div>);
+      
   }
   return (
     <div className="user-card">

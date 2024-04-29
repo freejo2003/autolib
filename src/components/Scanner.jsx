@@ -65,7 +65,7 @@ const BookAvailabilityMonitor = () => {
               bookRef.child("availability").on("value", async (snapshot) => {
                 const availability = snapshot.val();
 
-                if (!availability && email !== null) {
+                if (!availability && email == null) {
                   await bookRef.update({ takenBy: email });
                 } else if (availability && email !== null) {
                   await bookRef.update({ takenBy: "" });

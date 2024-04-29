@@ -35,7 +35,7 @@ const bookId=bookName.replace(/\s/g,"_");
       setEdition("");
       setPublication("");
       setShelfId("");
-      navigate("/");
+      navigate("/display");
     } 
     catch (error) {
       console.error("Error adding book:", error);
