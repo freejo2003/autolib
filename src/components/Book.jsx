@@ -6,6 +6,7 @@ import './Book.css';
 
 const Book = () => {
   const navigate = useNavigate();
+  const [serialNo, setSerialNo] = useState('');
   const [bookName, setBookName] = useState('');
   const [authorName, setAuthorName] = useState('');
   const [publication, setPublication] = useState('');
@@ -17,6 +18,7 @@ const Book = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const bookData = {
+      serialNo,
       bookName,
       authorName,
       publication,
@@ -25,11 +27,12 @@ const Book = () => {
       availability:true,
       takenBy:""
     };
-const bookId=bookName.replace(/\s/g,"_");
+const bookId=serialNo.replace(/\\s/g,"number");
     try {
       const newReminderRef = dataRef.ref("books").child(bookId);
         await newReminderRef.set(bookData);
       alert("Book successfully added!");
+      setSerialNo("");
       setBookName("");      
       setAuthorName("");
       setEdition("");
@@ -48,6 +51,13 @@ const bookId=bookName.replace(/\s/g,"_");
        <Header />
     
       <h1>SHELF 101</h1>
+      <label htmlFor='Serial No'>Serial No.:</label>
+        <input
+          type="number"
+          placeholder="Serial No"
+          value={serialNo}
+          onChange={(e) => setSerialNo(e.target.value)}
+        />
      <label htmlFor='Book Name'>Book Name:</label>
         <input
           type="text"

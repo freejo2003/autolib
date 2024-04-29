@@ -22,31 +22,15 @@ const BookAvailabilityMonitor = () => {
         scanner.render(success);
 
         function success(result) {
-          if (result === prevResult) {
-            setPrevResult(null);
-            setEmail(null);
-            servo(0);
-          } else {
-            scanner.clear();
-            setPrevResult(result);
-            setEmail(result);
-            servo(1);
-          }
-        }
+          scanner.clear();
+          setPrevResult(result);
 
-        function servo(status) {
-          const url = `http://nodemcuIp/servo=${status}`;
-          fetch(url)
-            .then((response) => {
-              if (response.status === 200) {
-                console.log("Request sent successfully to device");
-              } else {
-                console.error("Failed to sent request to device");
-              }
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+          // Update email state only if it's not already set
+          if (email === null) {
+            setEmail(result);
+          }
+
+          servo(1);
         }
 
         const booksRef = dataRef.ref("books");
@@ -65,9 +49,11 @@ const BookAvailabilityMonitor = () => {
               bookRef.child("availability").on("value", async (snapshot) => {
                 const availability = snapshot.val();
 
-                if (!availability && email == null) {
+                if (!availability && email !== null) {
+                  // Update takenBy field only if the book is unavailable and email is set
                   await bookRef.update({ takenBy: email });
                 } else if (availability && email !== null) {
+                  // Clear takenBy field if the book becomes available and email is set
                   await bookRef.update({ takenBy: "" });
                 }
               });
@@ -82,9 +68,30 @@ const BookAvailabilityMonitor = () => {
     fetchData();
 
     return () => {
-      //Cleanup
+      // Cleanup
     };
   }, [email]);
+
+  function servo(status) {
+    const url = `http://192.168.109.154/servo=${status}`;
+    fetch(url)
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("Request sent successfully to device");
+        } else {
+          console.error("Failed to send request to device");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
+  const handleLogout = () => {
+    setPrevResult(null);
+    setEmail(null);
+    servo(0);
+  };
 
   return (
     <div className="container">
@@ -104,6 +111,9 @@ const BookAvailabilityMonitor = () => {
               </li>
             ))}
         </ul>
+        <button className="logout-button" onClick={handleLogout}>
+          Logout
+        </button>
       </div>
     </div>
   );
