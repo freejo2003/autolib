@@ -4,45 +4,27 @@ h3{
 .user-card {
   display: flex;
   flex-direction: column;
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-  
+.tab1{ border-collapse: collapse; /* Merge cell borders */
+  width: 50%;
+  margin:0 auto;}
 .qr-code {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-
-  
   .user-card h2,.user-card h3, .user-card p {
     text-align: center;
   }
-  
-  .user-card table {
-    width: flex;
-    margin-top: 15px;
-  }
-  
-  table {
-    border-collapse: collapse; /* Merge cell borders */
-    width: 100%;
-  }
-  
   table th, table td {
     border: 1px solid black;
     padding: 10px;
-    text-align: left; /* Align text to the left */
+    text-align: left;
   }
-  
-  
   table th {
     background-color: #f2f2f2;
   }
-  
-  /* Add hover effect to table rows */
   table tr:hover {
     background-color: #e6e6e6;
   }

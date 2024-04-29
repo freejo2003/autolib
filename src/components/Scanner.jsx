@@ -1,59 +1,52 @@
 import React, { useState, useEffect } from "react";
 import { dataRef } from "../firebaseConfig";
 import { Html5QrcodeScanner } from "html5-qrcode";
+import { useMediaQuery } from 'react-responsive';
 import "./Scanner.css";
-
+import Header from './Header';
 const BookAvailabilityMonitor = () => {
   const [email, setEmail] = useState(null);
   const [prevResult, setPrevResult] = useState(null);
   const [books, setBooks] = useState([]);
-
+  const isMobileDevice = useMediaQuery({ query: "(max-width: 767px)" }); // Adjusted for mobile devices
+  const isTabletOrLargerDevice = useMediaQuery({ query: "(min-width: 768px)" }); // Adjusted for tablets and larger devices
   useEffect(() => {
     const fetchData = async () => {
       try {
         const scanner = new Html5QrcodeScanner("reader", {
           qrbox: {
-            width: 250,
-            height: 250,
+            width: isMobileDevice ? 200 : 250,
+            height: isMobileDevice ? 200 : 250,
           },
           fps: 5,
         });
-
         scanner.render(success);
-
         function success(result) {
           scanner.clear();
           setPrevResult(result);
-
-          // Update email state only if it's not already set
           if (email === null) {
             setEmail(result);
           }
-
           servo(1);
         }
-
         const booksRef = dataRef.ref("books");
         booksRef.on("value", (snapshot) => {
           const booksData = snapshot.val();
-
           if (booksData) {
             const booksArray = Object.keys(booksData).map((key) => ({
               id: key,
               ...booksData[key],
             }));
             setBooks(booksArray);
-
             for (const book of booksArray) {
               const bookRef = booksRef.child(book.id);
               bookRef.child("availability").on("value", async (snapshot) => {
                 const availability = snapshot.val();
-
-                if (!availability && email !== null) {
-                  // Update takenBy field only if the book is unavailable and email is set
+                const bookSnapshot = await bookRef.once("value");
+                const bookData = bookSnapshot.val();
+                if (!availability && !bookData.takenBy && email !== null) {
                   await bookRef.update({ takenBy: email });
-                } else if (availability && email !== null) {
-                  // Clear takenBy field if the book becomes available and email is set
+                } else if (bookData.takenBy && availability && email !== null) {
                   await bookRef.update({ takenBy: "" });
                 }
               });
@@ -64,14 +57,11 @@ const BookAvailabilityMonitor = () => {
         console.error("Error fetching data:", error);
       }
     };
-
     fetchData();
-
     return () => {
       // Cleanup
     };
-  }, [email]);
-
+  }, [email, isMobileDevice]);
   function servo(status) {
     const url = `http://192.168.109.154/servo=${status}`;
     fetch(url)
@@ -86,20 +76,20 @@ const BookAvailabilityMonitor = () => {
         console.error(error);
       });
   }
-
   const handleLogout = () => {
     setPrevResult(null);
     setEmail(null);
     servo(0);
   };
-
   return (
+    <div>
+      <Header />
     <div className="container">
-      <div className="scanner-container">
+      <div className={`scanner-container ${isMobileDevice ? 'mobile' : 'desktop'}`}>
         <h2 className="title">Scan your QR code</h2>
         <div id="reader" className="qrcode-reader"></div>
       </div>
-      <div className="details-container">
+      <div className={`details-container ${isMobileDevice ? 'mobile' : 'desktop'}`}>
         <p className="account">Account: {email}</p>
         <h3 className="books-taken">Books taken:</h3>
         <ul className="books-list">
@@ -111,12 +101,12 @@ const BookAvailabilityMonitor = () => {
               </li>
             ))}
         </ul>
-        <button className="logout-button" onClick={handleLogout}>
+        <button  className="logout-button" onClick={handleLogout}>
           Logout
         </button>
       </div>
     </div>
+    </div>
   );
 };
-
 export default BookAvailabilityMonitor;

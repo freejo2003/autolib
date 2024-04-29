@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import {dataRef} from "../firebaseConfig";
 import './Book.css';
-
 const Book = () => {
   const navigate = useNavigate();
   const [serialNo, setSerialNo] = useState('');
@@ -11,10 +10,7 @@ const Book = () => {
   const [authorName, setAuthorName] = useState('');
   const [publication, setPublication] = useState('');
   const [edition, setEdition] = useState('');
-  
   const [shelfId, setShelfId] = useState('');
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const bookData = {
@@ -45,11 +41,9 @@ const bookId=serialNo.replace(/\\s/g,"number");
       alert("An error occurred. Please try again.");
     }
   };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='addbook' onSubmit={handleSubmit}>
        <Header />
-    
       <h1>SHELF 101</h1>
       <label htmlFor='Serial No'>Serial No.:</label>
         <input
@@ -86,8 +80,6 @@ const bookId=serialNo.replace(/\\s/g,"number");
           value={edition}
           onChange={(e) => setEdition(e.target.value)}
         />
-
-        
         <label htmlFor='Shelf ID'>Shelf ID:</label>
         <input
           type="text"
@@ -95,7 +87,7 @@ const bookId=serialNo.replace(/\\s/g,"number");
           value={shelfId}
           onChange={(e) => setShelfId(e.target.value)}
         />
-      <button type="submit">Add Book</button>
+      <button className='bu' type="submit">Add Book</button>
       </form>
   );
 };

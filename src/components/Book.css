@@ -1,28 +1,39 @@
-form {
+.addbook {
     display: flex;
     flex-direction: column;
     background-color: white;
-    padding: 20px;
-    border-radius: 5px;
+    border: radius 15px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   label {
     margin-bottom: 5px;
+    display: block;
+    text-align: center;
+  
   }
   
   input {
     margin-bottom: 10px;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 3px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px; /* Reduced border-radius */
+  display: block; /* To make inputs display as block elements */
+  margin-left: auto; /* Center the input horizontally */
+  margin-right: auto; /* Center the input horizontally */
   }
-  
-  button {
-    padding: 5px 10px;
+  button{
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 3px;
     cursor: pointer;
+  }
+  .bu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: block; /* To make inputs display as block elements */
+  margin-left: auto; /* Center the input horizontally */
+  margin-right: auto;
   }

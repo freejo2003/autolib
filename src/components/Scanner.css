@@ -1,48 +1,69 @@
 .container {
-    display: flex;
-    justify-content: space-between;
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
 
-  .scanner-container {
-    flex: 1;
-    margin-right: 70px;
-  }
+.scanner-container {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-  .details-container {
-    flex: 2;
-  }
+.title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
 
-  .title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
+.qrcode-reader {
+  display: flex;
+  justify-content: center;
+}
 
-  .qrcode-reader {
-    margin-bottom: 20px;
-  }
+.details-container {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
-  .account {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
+.account {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
 
-  .books-taken {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
+.books-taken {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
 
-  .books-list {
-    list-style-type: none;
-    padding: 0;
-  }
+.books-list {
+  list-style-type: none;
+  padding: 0;
+}
 
-  .book-item {
-    font-size: 16px;
-    margin-bottom: 5px;
-  }
+.book-item {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.logout-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: #0056b3;
+}

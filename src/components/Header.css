@@ -4,11 +4,14 @@
   padding: 20px;
   background-color: blue;
   color: white;
-  width: 100%;
+  
 }
 
 .logo {
-  font-size: 5vw;
+  font-size: 3vw;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
 }
 
 .hamburger-menu {

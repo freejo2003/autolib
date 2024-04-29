@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { dataRef } from "../firebaseConfig";
 import { Link } from 'react-router-dom';
-
 const UserCard = () => {
   const { user } = useUser();
   const [books, setBooks] = useState([]);
@@ -29,15 +28,16 @@ const UserCard = () => {
   }
 },[user]);
   if (!user) {
-    <Link to="/login">
+    
+    <Link to="/">
         <button >Login</button>
       </Link>
-      return (<div>
-        <h3>Please Login</h3>
-        <Link to="/login">
-      <button >Login</button>
-    </Link></div>);
-      
+      return (
+      <div>
+        <Header />
+        <h3>Login...</h3>
+      </div>
+    );
   }
   return (
     <div className="user-card">
@@ -49,7 +49,7 @@ const UserCard = () => {
       </div>
       <h3>List of allotted Books:</h3>
       {books.length > 0 ? (
-        <table>
+        <table className="tab1">
           <thead>
             <tr>
               <th>Name of Book</th>

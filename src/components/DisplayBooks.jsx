@@ -34,7 +34,7 @@ const DisplayBooks = () => {
     <div>
       <Header />
       <h1>Books Available</h1>
-      <table>
+      <table className='books'>
         <thead>
           <tr>
             <th>Book Name</th>
@@ -55,7 +55,7 @@ const DisplayBooks = () => {
               <td>{book.publication}</td>
               <td>{book.edition}</td>
               <td>{book.shelfId}</td>
-              <td>{book.availability ? "Avilable" : "Not avilable"}</td>
+              <td>{book.availability ? "Available" : "Not available"}</td>
               <td>{book.takenBy}</td>
             </tr>
           ))}
