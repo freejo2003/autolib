@@ -14,22 +14,22 @@ const BookAvailabilityMonitor = () => {
     const fetchData = async () => {
       try {
         const scanner = new Html5QrcodeScanner("reader", {
-          qrbox: {
+          qrbox: {//display QRcode
             width: isMobileDevice ? 200 : 250,
             height: isMobileDevice ? 200 : 250,
           },
           fps: 5,
         });
         scanner.render(success);
-        function success(result) {
+        function success(result) {//when qr code read success
           scanner.clear();
           setPrevResult(result);
           if (email === null) {
             setEmail(result);
           }
-          servo(1);
+          servo(1);//turn servo motor
         }
-        const booksRef = dataRef.ref("books");
+        const booksRef = dataRef.ref("books");//fetch data from database
         booksRef.on("value", (snapshot) => {
           const booksData = snapshot.val();
           if (booksData) {
@@ -37,16 +37,18 @@ const BookAvailabilityMonitor = () => {
               id: key,
               ...booksData[key],
             }));
-            setBooks(booksArray);
+            setBooks(booksArray);//line 40-46 is for checking if the book is available or not
             for (const book of booksArray) {
               const bookRef = booksRef.child(book.id);
               bookRef.child("availability").on("value", async (snapshot) => {
                 const availability = snapshot.val();
                 const bookSnapshot = await bookRef.once("value");
                 const bookData = bookSnapshot.val();
-                if (!availability && !bookData.takenBy && email !== null) {
+                if (!availability && !bookData.takenBy && email !== null) 
+                {//line 47-51 is for making the entry of the books 
                   await bookRef.update({ takenBy: email });
-                } else if (bookData.takenBy && availability && email !== null) {
+                } else if (bookData.takenBy && availability && email !== null) 
+                {
                   await bookRef.update({ takenBy: "" });
                 }
               });
@@ -63,10 +65,10 @@ const BookAvailabilityMonitor = () => {
     };
   }, [email, isMobileDevice]);
   function servo(status) {
-    const url = `http://192.168.109.154/servo=${status}`;
+    const url = `http://192.168.109.154/servo=${status}`;//connecting to esp module
     fetch(url)
       .then((response) => {
-        if (response.status === 200) {
+        if (response.status === 200) {//check if connection is made or not
           console.log("Request sent successfully to device");
         } else {
           console.error("Failed to send request to device");
@@ -81,7 +83,7 @@ const BookAvailabilityMonitor = () => {
     setEmail(null);
     servo(0);
   };
-  return (
+  return (//web page line 84-109
     <div>
       <Header />
     <div className="container">

@@ -34,7 +34,7 @@ const bookId=serialNo.replace(/\\s/g,"number");
       setEdition("");
       setPublication("");
       setShelfId("");
-      navigate("/display");
+      navigate("/");
     } 
     catch (error) {
       console.error("Error adding book:", error);

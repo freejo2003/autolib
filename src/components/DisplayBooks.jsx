@@ -21,7 +21,7 @@ const DisplayBooks = () => {
     getBooks();
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user) { 
         setUserEmail(user.email);
       }
     });

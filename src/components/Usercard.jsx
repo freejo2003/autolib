@@ -29,9 +29,6 @@ const UserCard = () => {
 },[user]);
   if (!user) {
     
-    <Link to="/">
-        <button >Login</button>
-      </Link>
       return (
       <div>
         <Header />
